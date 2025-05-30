@@ -89,7 +89,7 @@
                     <p>Use this encrypted form for initial consultations and project inquiries. All communications are secured and confidential.</p>
                 </div>
                 
-                <form class="contact-form" id="contact-form">
+                <form class="contact-form" id="contact-form" method="POST" action="#" novalidate>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name">Identification:</label>
@@ -126,4 +126,165 @@
                                 <option value="vulnerability-assessment">Vulnerability Assessment</option>
                                 <option value="penetration-testing">Penetration Testing</option>
                                 <option value="security-implementation">Security Implementation</option>
-                                <option value="threat-analysis">
+                                <option value="threat-analysis">Custom Threat Analysis</option>
+                                <option value="incident-response">Incident Response</option>
+                                <option value="security-training">Security Training</option>
+                                <option value="consultation">General Consultation</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="urgency">Priority Level:</label>
+                            <select id="urgency" name="urgency" required>
+                                <option value="">Select priority...</option>
+                                <option value="low">Low - General inquiry</option>
+                                <option value="medium">Medium - Planning consultation</option>
+                                <option value="high">High - Active security concern</option>
+                                <option value="critical">Critical - Active incident</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Mission Objective:</label>
+                        <input type="text" id="subject" name="subject" required>
+                        <small>Brief description of your security needs</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Encrypted Message:</label>
+                        <textarea id="message" name="message" rows="6" required placeholder="Detailed description of your requirements..."></textarea>
+                        <small>Detailed description of your requirements (minimum 20 characters)</small>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="pgp-request" name="pgp-request">
+                        <label for="pgp-request" class="checkbox-label">
+                            Request PGP encrypted response for sensitive communications
+                        </label>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="privacy-consent" name="privacy-consent" required>
+                        <label for="privacy-consent" class="checkbox-label">
+                            I consent to secure processing of this information for consultation purposes
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">TRANSMIT SECURE MESSAGE</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="security-info">
+        <div class="container">
+            <h2 class="section-title">Security Protocols</h2>
+            <div class="security-grid">
+                <div class="security-item">
+                    <h3>🔐 PGP Encryption</h3>
+                    <p>For highly sensitive communications, we recommend using PGP encryption.</p>
+                    <div class="pgp-details">
+                        <p><strong>Key ID:</strong> 0xDEF455EC789ABD21</p>
+                        <p><strong>Fingerprint:</strong> A1B2 C3D4 E5F6 7890 1234 5678 DEF4 55EC 789A BD21</p>
+                        <a href="#" class="download-key">Download Public Key</a>
+                    </div>
+                </div>
+                
+                <div class="security-item">
+                    <h3>🛡️ Security Standards</h3>
+                    <p>All communications are protected by:</p>
+                    <ul>
+                        <li>TLS 1.3 encryption in transit</li>
+                        <li>AES-256 encryption at rest</li>
+                        <li>Zero-knowledge architecture</li>
+                        <li>Secure deletion protocols</li>
+                        <li>Multi-factor authentication</li>
+                    </ul>
+                </div>
+                
+                <div class="security-item">
+                    <h3>⏱️ Response Times</h3>
+                    <p>Guaranteed response times based on priority:</p>
+                    <ul>
+                        <li><strong>Critical:</strong> Within 1 hour</li>
+                        <li><strong>High:</strong> Within 4 hours</li>
+                        <li><strong>Medium:</strong> Within 24 hours</li>
+                        <li><strong>Low:</strong> Within 48 hours</li>
+                    </ul>
+                </div>
+                
+                <div class="security-item">
+                    <h3>🏢 Secure Facilities</h3>
+                    <p>Our operations are conducted from:</p>
+                    <ul>
+                        <li>TEMPEST-rated secure rooms</li>
+                        <li>Biometric access controls</li>
+                        <li>24/7 physical security</li>
+                        <li>Air-gapped networks</li>
+                        <li>Faraday cage protection</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>HyperGrid Defenders Lab</h4>
+                    <p>Elite cybersecurity solutions protecting the digital frontier.</p>
+                    <div class="contact-info">
+                        <p>📧 contact@hypergridsec.com</p>
+                        <p>🔐 security@hypergridsec.com</p>
+                        <p>📞 +1-555-SECURITY</p>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html">Vulnerability Assessment</a></li>
+                        <li><a href="services.html">Penetration Testing</a></li>
+                        <li><a href="services.html">Security Implementation</a></li>
+                        <li><a href="services.html">Threat Analysis</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="blog.html">Security Blog</a></li>
+                        <li><a href="security.txt">Security Policy</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Security Notice</h4>
+                    <div class="security-info">
+                        <p>🛡️ This site uses HTTPS encryption</p>
+                        <p>🔒 All communications are secured</p>
+                        <p>🎯 Zero-trust security model</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pgp-info">
+                <h4>🔐 High-Security Communications</h4>
+                <p>For sensitive inquiries requiring enhanced security:</p>
+                <p><strong>PGP Key ID:</strong> 0xDEF455EC789ABD21</p>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 HyperGrid Defenders Lab. All rights reserved.</p>
+                <p class="security-notice">"In the digital realm, security is not a destination—it's a continuous mission."</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/scripts.js"></script>
+</body>
+</html>
