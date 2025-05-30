@@ -1,4 +1,3 @@
-
 // HyperGrid Defenders Lab - Main JavaScript
 // Security-focused, no inline scripts
 
@@ -238,196 +237,215 @@
             notification.textContent = message;
             notification.style.cssText = `
                 position: fixed;
-                top:                                 <option value="threat-analysis">Custom Threat Analysis</option>
-                                <option value="incident-response">Incident Response</option>
-                                <option value="security-training">Security Training</option>
-                                <option value="consultation">General Consultation</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="urgency">Priority Level:</label>
-                            <select id="urgency" name="urgency" required>
-                                <option value="">Select priority...</option>
-                                <option value="low">Low - General inquiry</option>
-                                <option value="medium">Medium - Planning consultation</option>
-                                <option value="high">High - Active security concern</option>
-                                <option value="critical">Critical - Active incident</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="subject">Mission Objective:</label>
-                        <input type="text" id="subject" name="subject" required>
-                        <small>Brief description of your security needs</small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Encrypted Message:</label>
-                        <textarea id="message" name="message" rows="6" required></textarea>
-                        <small>Detailed description of your requirements (minimum 20 characters)</small>
-                    </div>
-                    
-                    <div class="form-group checkbox-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="pgp-request" name="pgp-request">
-                            <span class="checkmark"></span>
-                            Request PGP encrypted response for sensitive communications
-                        </label>
-                    </div>
-                    
-                    <div class="form-group checkbox-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="privacy-consent" name="privacy-consent" required>
-                            <span class="checkmark"></span>
-                            I consent to secure processing of this information for consultation purposes
-                        </label>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">TRANSMIT SECURE MESSAGE</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <section class="security-info">
-        <div class="container">
-            <h2 class="section-title">Security Protocols</h2>
-            <div class="security-grid">
-                <div class="security-item">
-                    <h3>🔐 PGP Encryption</h3>
-                    <p>For highly sensitive communications, we recommend using PGP encryption.</p>
-                    <div class="pgp-details">
-                        <p><strong>Key ID:</strong> 0xDEF455EC789ABD21</p>
-                        <p><strong>Fingerprint:</strong> A1B2 C3D4 E5F6 7890 1234 5678 DEF4 55EC 789A BD21</p>
-                        <a href="#" class="download-key">Download Public Key</a>
-                    </div>
-                </div>
-                
-                <div class="security-item">
-                    <h3>🛡️ Security Standards</h3>
-                    <p>All communications are protected by:</p>
-                    <ul>
-                        <li>TLS 1.3 encryption in transit</li>
-                        <li>AES-256 encryption at rest</li>
-                        <li>Zero-knowledge architecture</li>
-                        <li>Secure deletion protocols</li>
-                        <li>Multi-factor authentication</li>
-                    </ul>
-                </div>
-                
-                <div class="security-item">
-                    <h3>⏱️ Response Times</h3>
-                    <p>Guaranteed response times based on priority:</p>
-                    <ul>
-                        <li><strong>Critical:</strong> Within 1 hour</li>
-                        <li><strong>High:</strong> Within 4 hours</li>
-                        <li><strong>Medium:</strong> Within 24 hours</li>
-                        <li><strong>Low:</strong> Within 48 hours</li>
-                    </ul>
-                </div>
-                
-                <div class="security-item">
-                    <h3>🏢 Secure Facilities</h3>
-                    <p>Our operations are conducted from:</p>
-                    <ul>
-                        <li>TEMPEST-rated secure rooms</li>
-                        <li>Biometric access controls</li>
-                        <li>24/7 physical security</li>
-                        <li>Air-gapped networks</li>
-                        <li>Faraday cage protection</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="office-info">
-        <div class="container">
-            <h2 class="section-title">Operations Center</h2>
-            <div class="office-grid">
-                <div class="office-location">
-                    <h3>Primary Operations Center</h3>
-                    <p>🏢 Secure facility with restricted access</p>
-                    <p>📍 Location disclosed to verified clients only</p>
-                    <p>🔒 TEMPEST-rated secure communication room</p>
-                    <p>🛡️ Military-grade security protocols</p>
-                </div>
-                <div class="office-hours">
-                    <h3>Operation Hours</h3>
-                    <p>🕒 Business Hours: Mon-Fri 9:00-18:00 GMT</p>
-                    <p>🌙 Emergency Response: 24/7/365</p>
-                    <p>📞 Incident Hotline: Always monitored</p>
-                    <p>🔔 Automated threat monitoring: Continuous</p>
-                </div>
-                <div class="compliance-info">
-                    <h3>Compliance & Certifications</h3>
-                    <p>🏆 ISO 27001 Certified</p>
-                    <p>📋 SOC 2 Type II Compliant</p>
-                    <p>🔐 NIST Framework Aligned</p>
-                    <p>🌍 GDPR Compliant Operations</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h4>HyperGrid Defenders Lab</h4>
-                    <p>Elite cybersecurity solutions protecting the digital frontier.</p>
-                    <div class="contact-info">
-                        <p>📧 contact@hypergridsec.com</p>
-                        <p>🔐 security@hypergridsec.com</p>
-                        <p>📞 +1-555-SECURITY</p>
-                    </div>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="services.html">Vulnerability Assessment</a></li>
-                        <li><a href="services.html">Penetration Testing</a></li>
-                        <li><a href="services.html">Security Implementation</a></li>
-                        <li><a href="services.html">Threat Analysis</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="blog.html">Security Blog</a></li>
-                        <li><a href="security.txt">Security Policy</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Security Notice</h4>
-                    <div class="security-info">
-                        <p>🛡️ This site uses HTTPS encryption</p>
-                        <p>🔒 All communications are secured</p>
-                        <p>🎯 Zero-trust security model</p>
-                    </div>
-                </div>
-            </div>
+                top: 100px;
+                right: 20px;
+                padding: 1rem 2rem;
+                background: ${type === 'error' ? '#ff3333' : '#00cc33'};
+                color: #0a0a0a;
+                border-radius: 5px;
+                z-index: 10000;
+                font-family: 'Orbitron', monospace;
+                font-weight: 600;
+                box-shadow: 0 0 20px ${type === 'error' ? '#ff3333' : '#00cc33'};
+                animation: slideInRight 0.3s ease;
+                max-width: 400px;
+                word-wrap: break-word;
+            `;
             
-            <div class="pgp-info">
-                <h4>🔐 High-Security Communications</h4>
-                <p>For sensitive inquiries requiring enhanced security:</p>
-                <p><strong>PGP Key ID:</strong> 0xDEF455EC789ABD21</p>
-            </div>
+            // Add CSS animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideInRight {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
             
-            <div class="footer-bottom">
-                <p>&copy; 2025 HyperGrid Defenders Lab. All rights reserved.</p>
-                <p class="security-notice">"In the digital realm, security is not a destination—it's a continuous mission."</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="assets/js/scripts.js"></script>
-</body>
-</html>
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+                style.remove();
+            }, 5000);
+        }
+    }
+    
+    // Scroll Animations
+    class ScrollAnimations {
+        constructor() {
+            this.observer = null;
+            this.init();
+        }
+        
+        init() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            this.observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe elements that should animate on scroll
+            const animateElements = document.querySelectorAll(`
+                .service-card, 
+                .blog-card, 
+                .contact-method, 
+                .stat, 
+                .approach-item, 
+                .value-card, 
+                .cert-item,
+                .category-card,
+                .additional-service,
+                .process-step,
+                .security-item
+            `);
+            
+            animateElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                this.observer.observe(el);
+            });
+        }
+    }
+    
+    // Security Features
+    class SecurityFeatures {
+        constructor() {
+            this.init();
+        }
+        
+        init() {
+            // Disable right-click context menu (basic protection)
+            document.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                this.showSecurityMessage();
+            });
+            
+            // Disable common developer shortcuts
+            document.addEventListener('keydown', (e) => {
+                // Disable F12, Ctrl+Shift+I, Ctrl+U
+                if (e.key === 'F12' || 
+                    (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                    (e.ctrlKey && e.key === 'u')) {
+                    e.preventDefault();
+                    this.showSecurityMessage();
+                }
+            });
+            
+            // Console warning
+            console.warn(`
+    🛡️ HyperGrid Defenders Lab Security Notice 🛡️
+    
+    This website is protected by advanced security measures.
+    Unauthorized access attempts are monitored and logged.
+    
+    For legitimate security research or vulnerability reporting,
+    please contact: security@hypergridsec.com
+    
+    PGP Key: 0xDEF455EC789ABD21
+            `);
+        }
+        
+        showSecurityMessage() {
+            const message = document.createElement('div');
+            message.textContent = '🛡️ Security protocols active. Unauthorized access attempts are logged.';
+            message.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #111111;
+                color: #00ff41;
+                padding: 2rem;
+                border: 2px solid #00ff41;
+                border-radius: 10px;
+                font-family: 'Orbitron', monospace;
+                text-align: center;
+                z-index: 10001;
+                box-shadow: 0 0 30px #00ff41;
+            `;
+            
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 3000);
+        }
+    }
+    
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize all components
+        new MatrixRain();
+        new NavigationHandler();
+        new ContactFormHandler();
+        new ScrollAnimations();
+        new SecurityFeatures();
+        
+        // Card hover effects
+        const cards = document.querySelectorAll('.service-card, .blog-card, .contact-method');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+        
+        // Terminal typing effect for hero
+        const terminalPrompts = document.querySelectorAll('.terminal-prompt');
+        terminalPrompts.forEach(prompt => {
+            const text = prompt.textContent;
+            prompt.textContent = '';
+            prompt.style.opacity = '1';
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < text.length) {
+                    prompt.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                } else {
+                    // Add blinking cursor
+                    prompt.innerHTML += '<span class="cursor">|</span>';
+                    
+                    // Add cursor blinking animation
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        .cursor {
+                            animation: blink 1s infinite;
+                        }
+                        @keyframes blink {
+                            0%, 50% { opacity: 1; }
+                            51%, 100% { opacity: 0; }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            };
+            
+            setTimeout(typeWriter, 500);
+        });
+        
+        console.log('[HyperGrid Security] All systems initialized and secured.');
+    });
+    
+})();
