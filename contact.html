@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Contact | HyperGrid Defenders Lab</title>
+    <meta name="description" content="Get in touch with HyperGrid Defenders Lab for cybersecurity consultations and secure communications.">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; img-src 'self' data:; connect-src 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+</head>
+<body>
+    <div class="matrix-bg" id="matrix-bg"></div>
+    <div class="scanlines"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">HyperGrid Defenders</a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="blog.html">Intel</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="hero-content">
+            <div class="terminal-prompt">[root@hypergrid ~]$ establish_secure_channel --encryption=pgp</div>
+            <h1>Secure Communication</h1>
+            <p class="subtitle">Initiate secure contact protocols</p>
+        </div>
+    </section>
+
+    <section class="contact-methods">
+        <div class="container">
+            <h2 class="section-title">Communication Channels</h2>
+            <div class="contact-grid">
+                <div class="contact-method">
+                    <div class="method-icon">📧</div>
+                    <h3>Email Contact</h3>
+                    <p>For general inquiries and initial consultations</p>
+                    <a href="mailto:contact@hypergridsec.com" class="contact-link">contact@hypergridsec.com</a>
+                    <div class="response-time">Response: 24-48 hours</div>
+                </div>
+                <div class="contact-method">
+                    <div class="method-icon">🔐</div>
+                    <h3>Secure Communications</h3>
+                    <p>For sensitive security matters requiring encryption</p>
+                    <a href="mailto:security@hypergridsec.com" class="contact-link">security@hypergridsec.com</a>
+                    <div class="pgp-info">PGP Key: 0xDEF455EC789ABD21</div>
+                    <div class="response-time">Response: 4-12 hours</div>
+                </div>
+                <div class="contact-method">
+                    <div class="method-icon">🚨</div>
+                    <h3>Emergency Response</h3>
+                    <p>24/7 incident response hotline</p>
+                    <a href="tel:+1555SECURITY" class="contact-link">+1-555-SECURITY</a>
+                    <div class="emergency-note">For active security incidents only</div>
+                    <div class="response-time">Response: Immediate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-form-section">
+        <div class="container">
+            <div class="form-container">
+                <div class="form-intro">
+                    <h2>Secure Contact Form</h2>
+                    <p>Use this encrypted form for initial consultations and project inquiries. All communications are secured and confidential.</p>
+                </div>
+                
+                <form class="contact-form" id="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Identification:</label>
+                            <input type="text" id="name" name="name" required>
+                            <small>Your name or organization identifier</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Communication Channel:</label>
+                            <input type="email" id="email" name="email" required>
+                            <small>Secure email address for our response</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="organization">Organization:</label>
+                            <input type="text" id="organization" name="organization">
+                            <small>Company or organization name (optional)</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone:</label>
+                            <input type="tel" id="phone" name="phone">
+                            <small>Contact number (optional)</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="service">Service Interest:</label>
+                            <select id="service" name="service" required>
+                                <option value="">Select a service...</option>
+                                <option value="vulnerability-assessment">Vulnerability Assessment</option>
+                                <option value="penetration-testing">Penetration Testing</option>
+                                <option value="security-implementation">Security Implementation</option>
+                                <option value="threat-analysis">
