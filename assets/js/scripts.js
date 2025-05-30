@@ -128,176 +128,130 @@
         }
     }
     
-    // Simplified Contact Form Handler for Formspree
+    // Simplified Contact Form Handler - No interference with Formspree
     class ContactFormHandler {
         constructor() {
             this.form = document.getElementById('contact-form');
-            this.statusDiv = document.getElementById('form-status');
             this.init();
         }
         
         init() {
             if (this.form) {
-                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-                
-                // Check if we returned from successful submission
-                this.checkUrlForSuccess();
-            }
-        }
-        
-        checkUrlForSuccess() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('success') === '1') {
-                this.showSuccess('🎯 Secure message transmitted successfully! We will respond within the specified timeframe to your email address.');
-                
-                // Clean up URL
-                const url = new URL(window.location);
-                url.searchParams.delete('success');
-                window.history.replaceState({}, document.title, url);
-            }
-        }
-        
-        async handleSubmit(e) {
-            e.preventDefault();
-            
-            const submitBtn = this.form.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            
-            // Show loading state
-            submitBtn.textContent = 'TRANSMITTING...';
-            submitBtn.disabled = true;
-            submitBtn.classList.add('loading');
-            
-            // Clear any previous status
-            if (this.statusDiv) {
-                this.statusDiv.textContent = '';
-            }
-            
-            try {
-                // Submit to Formspree
-                const formData = new FormData(this.form);
-                const response = await fetch(this.form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
+                // Only add visual effects, don't interfere with submission
+                this.form.addEventListener('submit', (e) => {
+                    const submitBtn = this.form.querySelector('.submit-btn');
+                    if (submitBtn) {
+                        const originalText = submitBtn.textContent;
+                        submitBtn.textContent = 'TRANSMITTING...';
+                        submitBtn.disabled = true;
+                        submitBtn.classList.add('loading');
+                        
+                        // Add a timeout to re-enable button if form fails
+                        setTimeout(() => {
+                            if (submitBtn.textContent === 'TRANSMITTING...') {
+                                submitBtn.textContent = originalText;
+                                submitBtn.disabled = false;
+                                submitBtn.classList.remove('loading');
+                            }
+                        }, 10000); // 10 second timeout
                     }
+                    
+                    // Let form submit naturally to Formspree - don't prevent default
                 });
                 
-                if (response.ok) {
-                    // Success animation
-                    submitBtn.textContent = 'MESSAGE TRANSMITTED ✓';
-                    submitBtn.classList.remove('loading');
-                    
-                    setTimeout(() => {
-                        this.form.reset();
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
-                        this.showSuccess('🛡️ Secure transmission successful! Your message has been encrypted and sent to our security team. Response time: 4-24 hours based on priority level.');
-                    }, 2000);
-                    
-                } else {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || 'Failed to send message');
-                }
-                
-            } catch (error) {
-                // Error handling
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('loading');
-                
-                this.showError('⚠️ Transmission failed. Please try again or contact us directly at secure.defenderslab@protonmail.com');
-                console.error('Form submission error:', error);
+                // Check URL for success parameter
+                this.checkForSuccess();
             }
         }
         
-        showSuccess(message) {
-            this.showNotification(message, 'success');
+        checkForSuccess() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === '1') {
+                // Show success message
+                setTimeout(() => {
+                    this.showSuccessMessage();
+                    this.cleanUrl();
+                }, 500);
+            }
         }
         
-        showError(message) {
-            this.showNotification(message, 'error');
-        }
-        
-        showNotification(message, type) {
-            // Remove existing notifications
-            const existingNotifications = document.querySelectorAll('.notification');
+        showSuccessMessage() {
+            // Remove any existing notifications
+            const existingNotifications = document.querySelectorAll('.success-notification');
             existingNotifications.forEach(notification => notification.remove());
             
             const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = message;
-            notification.style.cssText = `
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                padding: 1.5rem 2rem;
-                background: ${type === 'error' ? '#ff3333' : '#00cc33'};
-                color: #0a0a0a;
-                border-radius: 8px;
-                z-index: 10000;
-                font-family: 'Orbitron', monospace;
-                font-weight: 600;
-                font-size: 0.9rem;
-                box-shadow: 0 0 25px ${type === 'error' ? '#ff3333' : '#00cc33'};
-                animation: slideInRight 0.4s ease;
-                max-width: 400px;
-                word-wrap: break-word;
-                line-height: 1.4;
-                border: 2px solid ${type === 'error' ? '#ff3333' : '#00cc33'};
+            notification.className = 'success-notification';
+            notification.innerHTML = `
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">🛡️</div>
+                    <div style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #00ff41;">TRANSMISSION SUCCESSFUL</div>
+                    <div style="font-size: 0.9rem;">Your secure message has been encrypted and transmitted to our security team.</div>
+                    <div style="font-size: 0.8rem; margin-top: 1rem; opacity: 0.8;">Response time: 4-24 hours based on priority level</div>
+                </div>
             `;
             
-            // Add CSS animation if not exists
-            if (!document.getElementById('notification-styles')) {
-                const style = document.createElement('style');
-                style.id = 'notification-styles';
-                style.textContent = `
-                    @keyframes slideInRight {
-                        from {
-                            transform: translateX(100%);
-                            opacity: 0;
-                        }
-                        to {
-                            transform: translateX(0);
-                            opacity: 1;
-                        }
-                    }
-                    @keyframes slideOutRight {
-                        from {
-                            transform: translateX(0);
-                            opacity: 1;
-                        }
-                        to {
-                            transform: translateX(100%);
-                            opacity: 0;
-                        }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
+            notification.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #111111;
+                color: #00cc33;
+                padding: 3rem;
+                border-radius: 15px;
+                z-index: 10001;
+                font-family: 'Orbitron', monospace;
+                font-weight: 600;
+                text-align: center;
+                box-shadow: 0 0 40px #00cc33;
+                border: 2px solid #00cc33;
+                max-width: 500px;
+                animation: successPulse 0.5s ease-in-out;
+            `;
+            
+            // Add success animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes successPulse {
+                    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+                    50% { transform: translate(-50%, -50%) scale(1.05); }
+                    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
             
             document.body.appendChild(notification);
             
-            // Auto remove after delay
+            // Auto remove after 5 seconds
             setTimeout(() => {
-                notification.style.animation = 'slideOutRight 0.4s ease forwards';
+                notification.style.animation = 'successPulse 0.3s ease-in-out reverse';
                 setTimeout(() => {
                     if (notification.parentNode) {
                         notification.remove();
                     }
-                }, 400);
-            }, 6000);
+                    if (style.parentNode) {
+                        style.remove();
+                    }
+                }, 300);
+            }, 5000);
             
             // Click to dismiss
             notification.addEventListener('click', () => {
-                notification.style.animation = 'slideOutRight 0.4s ease forwards';
+                notification.style.animation = 'successPulse 0.3s ease-in-out reverse';
                 setTimeout(() => {
                     if (notification.parentNode) {
                         notification.remove();
                     }
-                }, 400);
+                }, 300);
             });
+        }
+        
+        cleanUrl() {
+            // Clean up URL parameters
+            const url = new URL(window.location);
+            url.searchParams.delete('success');
+            window.history.replaceState({}, document.title, url);
         }
     }
     
@@ -388,7 +342,13 @@
         
         showSecurityMessage() {
             const message = document.createElement('div');
-            message.textContent = '🛡️ Security protocols active. Unauthorized access attempts are logged.';
+            message.innerHTML = `
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem; margin-bottom: 1rem;">🛡️</div>
+                    <div>Security protocols active.</div>
+                    <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Unauthorized access attempts are logged.</div>
+                </div>
+            `;
             message.style.cssText = `
                 position: fixed;
                 top: 50%;
@@ -396,20 +356,64 @@
                 transform: translate(-50%, -50%);
                 background: #111111;
                 color: #00ff41;
-                padding: 2rem;
+                padding: 2rem 3rem;
                 border: 2px solid #00ff41;
                 border-radius: 10px;
                 font-family: 'Orbitron', monospace;
                 text-align: center;
                 z-index: 10001;
                 box-shadow: 0 0 30px #00ff41;
+                animation: securityPulse 0.3s ease-in-out;
             `;
+            
+            // Add animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes securityPulse {
+                    0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0; }
+                    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
             
             document.body.appendChild(message);
             
             setTimeout(() => {
-                message.remove();
+                if (message.parentNode) {
+                    message.remove();
+                }
+                if (style.parentNode) {
+                    style.remove();
+                }
             }, 3000);
+        }
+    }
+    
+    // Utility Functions
+    class Utils {
+        static debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
+        static throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            };
         }
     }
     
@@ -423,14 +427,32 @@
         new SecurityFeatures();
         
         // Card hover effects
-        const cards = document.querySelectorAll('.service-card, .blog-card, .contact-method');
+        const cards = document.querySelectorAll('.service-card, .blog-card, .contact-method, .stat');
         cards.forEach(card => {
             card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-10px)';
+                if (!card.style.transform.includes('translateY')) {
+                    card.style.transform = 'translateY(-10px)';
+                }
             });
             
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'translateY(0)';
+            });
+        });
+        
+        // Enhanced button effects
+        const buttons = document.querySelectorAll('.cta-button, .service-btn, .submit-btn');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                if (!this.disabled) {
+                    this.style.transform = 'translateY(-2px)';
+                }
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                if (!this.disabled) {
+                    this.style.transform = 'translateY(0)';
+                }
             });
         });
         
@@ -452,24 +474,45 @@
                     prompt.innerHTML += '<span class="cursor">|</span>';
                     
                     // Add cursor blinking animation
-                    const style = document.createElement('style');
-                    style.textContent = `
-                        .cursor {
-                            animation: blink 1s infinite;
-                        }
-                        @keyframes blink {
-                            0%, 50% { opacity: 1; }
-                            51%, 100% { opacity: 0; }
-                        }
-                    `;
-                    document.head.appendChild(style);
+                    if (!document.getElementById('cursor-blink-style')) {
+                        const style = document.createElement('style');
+                        style.id = 'cursor-blink-style';
+                        style.textContent = `
+                            .cursor {
+                                animation: blink 1s infinite;
+                            }
+                            @keyframes blink {
+                                0%, 50% { opacity: 1; }
+                                51%, 100% { opacity: 0; }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    }
                 }
             };
             
             setTimeout(typeWriter, 500);
         });
         
-        console.log('[HyperGrid Security] All systems initialized and secured. Form submissions via Formspree active.');
+        // Smooth scroll for internal links
+        const internalLinks = document.querySelectorAll('a[href^="#"]');
+        internalLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        console.log('[HyperGrid Security] All systems initialized and secured. Formspree integration active.');
     });
     
 })();
