@@ -128,103 +128,96 @@
         }
     }
     
-    // Contact Form Handler
+    // Simplified Contact Form Handler for Formspree
     class ContactFormHandler {
         constructor() {
             this.form = document.getElementById('contact-form');
+            this.statusDiv = document.getElementById('form-status');
             this.init();
         }
         
         init() {
             if (this.form) {
                 this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+                
+                // Check if we returned from successful submission
+                this.checkUrlForSuccess();
             }
         }
         
-        handleSubmit(e) {
+        checkUrlForSuccess() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === '1') {
+                this.showSuccess('🎯 Secure message transmitted successfully! We will respond within the specified timeframe to your email address.');
+                
+                // Clean up URL
+                const url = new URL(window.location);
+                url.searchParams.delete('success');
+                window.history.replaceState({}, document.title, url);
+            }
+        }
+        
+        async handleSubmit(e) {
             e.preventDefault();
             
-            // Basic form validation
-            const formData = new FormData(this.form);
-            const data = Object.fromEntries(formData);
-            
-            if (!this.validateForm(data)) {
-                return;
-            }
-            
-            // Simulate form submission (replace with actual endpoint)
-            this.submitForm(data);
-        }
-        
-        validateForm(data) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            
-            if (!data.name || data.name.trim().length < 2) {
-                this.showError('Please enter a valid name (minimum 2 characters)');
-                return false;
-            }
-            
-            if (!emailRegex.test(data.email)) {
-                this.showError('Please enter a valid email address');
-                return false;
-            }
-            
-            if (!data.service) {
-                this.showError('Please select a service of interest');
-                return false;
-            }
-            
-            if (!data.urgency) {
-                this.showError('Please select a priority level');
-                return false;
-            }
-            
-            if (!data.subject || data.subject.trim().length < 5) {
-                this.showError('Please enter a subject (minimum 5 characters)');
-                return false;
-            }
-            
-            if (!data.message || data.message.trim().length < 20) {
-                this.showError('Please enter a message (minimum 20 characters)');
-                return false;
-            }
-            
-            if (!data['privacy-consent']) {
-                this.showError('You must consent to processing of your information');
-                return false;
-            }
-            
-            return true;
-        }
-        
-        submitForm(data) {
             const submitBtn = this.form.querySelector('.submit-btn');
             const originalText = submitBtn.textContent;
             
+            // Show loading state
             submitBtn.textContent = 'TRANSMITTING...';
             submitBtn.disabled = true;
             submitBtn.classList.add('loading');
             
-            // Simulate API call (replace with actual endpoint)
-            setTimeout(() => {
-                submitBtn.textContent = 'MESSAGE TRANSMITTED ✓';
+            // Clear any previous status
+            if (this.statusDiv) {
+                this.statusDiv.textContent = '';
+            }
+            
+            try {
+                // Submit to Formspree
+                const formData = new FormData(this.form);
+                const response = await fetch(this.form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Success animation
+                    submitBtn.textContent = 'MESSAGE TRANSMITTED ✓';
+                    submitBtn.classList.remove('loading');
+                    
+                    setTimeout(() => {
+                        this.form.reset();
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                        this.showSuccess('🛡️ Secure transmission successful! Your message has been encrypted and sent to our security team. Response time: 4-24 hours based on priority level.');
+                    }, 2000);
+                    
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to send message');
+                }
+                
+            } catch (error) {
+                // Error handling
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
                 submitBtn.classList.remove('loading');
                 
-                setTimeout(() => {
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                    this.form.reset();
-                    this.showSuccess('Secure message transmitted successfully! We will respond within the specified timeframe.');
-                }, 2000);
-            }, 1500);
-        }
-        
-        showError(message) {
-            this.showNotification(message, 'error');
+                this.showError('⚠️ Transmission failed. Please try again or contact us directly at secure.defenderslab@protonmail.com');
+                console.error('Form submission error:', error);
+            }
         }
         
         showSuccess(message) {
             this.showNotification(message, 'success');
+        }
+        
+        showError(message) {
+            this.showNotification(message, 'error');
         }
         
         showNotification(message, type) {
@@ -234,46 +227,77 @@
             
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
-            notification.textContent = message;
+            notification.innerHTML = message;
             notification.style.cssText = `
                 position: fixed;
                 top: 100px;
                 right: 20px;
-                padding: 1rem 2rem;
+                padding: 1.5rem 2rem;
                 background: ${type === 'error' ? '#ff3333' : '#00cc33'};
                 color: #0a0a0a;
-                border-radius: 5px;
+                border-radius: 8px;
                 z-index: 10000;
                 font-family: 'Orbitron', monospace;
                 font-weight: 600;
-                box-shadow: 0 0 20px ${type === 'error' ? '#ff3333' : '#00cc33'};
-                animation: slideInRight 0.3s ease;
+                font-size: 0.9rem;
+                box-shadow: 0 0 25px ${type === 'error' ? '#ff3333' : '#00cc33'};
+                animation: slideInRight 0.4s ease;
                 max-width: 400px;
                 word-wrap: break-word;
+                line-height: 1.4;
+                border: 2px solid ${type === 'error' ? '#ff3333' : '#00cc33'};
             `;
             
-            // Add CSS animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideInRight {
-                    from {
-                        transform: translateX(100%);
-                        opacity: 0;
+            // Add CSS animation if not exists
+            if (!document.getElementById('notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideInRight {
+                        from {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
                     }
-                    to {
-                        transform: translateX(0);
-                        opacity: 1;
+                    @keyframes slideOutRight {
+                        from {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                        to {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
                     }
-                }
-            `;
-            document.head.appendChild(style);
+                `;
+                document.head.appendChild(style);
+            }
             
             document.body.appendChild(notification);
             
+            // Auto remove after delay
             setTimeout(() => {
-                notification.remove();
-                style.remove();
-            }, 5000);
+                notification.style.animation = 'slideOutRight 0.4s ease forwards';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 400);
+            }, 6000);
+            
+            // Click to dismiss
+            notification.addEventListener('click', () => {
+                notification.style.animation = 'slideOutRight 0.4s ease forwards';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 400);
+            });
         }
     }
     
@@ -356,7 +380,7 @@
     Unauthorized access attempts are monitored and logged.
     
     For legitimate security research or vulnerability reporting,
-    please contact: security@hypergridsec.com
+    please contact: secure.defenderslab@protonmail.com
     
     PGP Key: 0xDEF455EC789ABD21
             `);
@@ -445,7 +469,7 @@
             setTimeout(typeWriter, 500);
         });
         
-        console.log('[HyperGrid Security] All systems initialized and secured.');
+        console.log('[HyperGrid Security] All systems initialized and secured. Form submissions via Formspree active.');
     });
     
 })();
