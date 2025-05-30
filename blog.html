@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Intelligence Blog | HyperGrid Defenders Lab</title>
+    <meta name="description" content="Latest cybersecurity insights, threat analysis, and security tutorials from HyperGrid Defenders Lab.">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; img-src 'self' data:; connect-src 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+</head>
+<body>
+    <div class="matrix-bg" id="matrix-bg"></div>
+    <div class="scanlines"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">HyperGrid Defenders</a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="blog.html" class="active">Intel</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="hero-content">
+            <div class="terminal-prompt">[root@hypergrid ~]$ tail -f /var/log/threat_intel.log</div>
+            <h1>Intel Feed</h1>
+            <p class="subtitle">Latest cybersecurity intelligence and threat analysis</p>
+        </div>
+    </section>
+
+    <section class="blog-featured">
+        <div class="container">
+            <div class="featured-post">
+                <div class="featured-content">
+                    <div class="blog-meta">
+                        <span class="date">2025-05-28</span>
+                        <span class="category">Threat Intelligence</span>
+                        <span class="featured-badge">LATEST INTEL</span>
+                    </div>
+                    <h2><a href="blog/advanced-persistent-threats.html">Advanced Persistent Threats: The Silent Infiltrators</a></h2>
+                    <p class="featured-excerpt">Deep dive into APT tactics and how modern organizations can detect and defend against sophisticated long-term intrusions. Analysis of recent attack vectors and defensive countermeasures including behavioral analytics and threat hunting methodologies.</p>
+                    <a href="blog/advanced-persistent-threats.html" class="read-more-btn">Read Full Analysis →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog-categories">
+        <div class="container">
+            <h2 class="section-title">Intelligence Categories</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <div class="category-icon">🛡️</div>
+                    <h3>Threat Intelligence</h3>
+                    <p>Latest threat landscape analysis and emerging attack vectors targeting modern infrastructure.</p>
+                    <div class="category-count">12 Articles</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🔧</div>
+                    <h3>Security Tutorials</h3>
+                    <p>Step-by-step guides for implementing security best practices and defensive techniques.</p>
+                    <div class="category-count">8 Tutorials</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🤖</div>
+                    <h3>AI Security</h3>
+                    <p>Prompt engineering security and AI system protection strategies for the modern era.</p>
+                    <div class="category-count">6 Articles</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🚨</div>
+                    <h3>Incident Reports</h3>
+                    <p>Real-world attack analysis and lessons learned from security incidents.</p>
+                    <div class="category-count">15 Reports</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog-posts">
+        <div class="container">
+            <h2 class="section-title">Recent Publications</h2>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div class="blog-meta">
+                        <span class="date">2025-05-25</span>
+                        <span class="category">AI Security</span>
+                    </div>
+                    <h3><a href="blog/prompt-engineering-security.html">Prompt Engineering Security: Protecting AI Systems</a></h3>
+                    <p class="blog-excerpt">As AI integration accelerates, new attack vectors emerge. Learn how prompt injection attacks work and implement robust defenses for your AI-powered applications and LLM systems.</p>
+                    <div class="blog-tags">
+                        <span class="tag">AI</span>
+                        <span class="tag">Prompt Injection</span>
+                        <span class="tag">LLM Security</span>
+                    </div>
+                    <a href="blog/prompt-engineering-security.html" class="read-more">Read Analysis →</a>
+                </article>
+                
+                <article class="blog-card">
+                    <div class="blog-meta">
+                        <span class="date">2025-05-22</span>
+                        <span class="category">Vulnerability Alert</span>
+                    </div>
+                    <h3><a href="blog/critical-smb-vulnerabilities.html">Critical SMB Vulnerabilities: Immediate Action Required</a></h3>
+                    <p class="blog-excerpt">New zero-day vulnerabilities discovered in popular business software. Urgent patches and mitigation strategies for small to medium businesses to prevent exploitation.</p>
+                    <div class="blog-tags">
+                        <span class="tag">CVE</span>
+                        <span class="tag">Zero-day</span>
+                        <span class="tag">SMB</span>
+                    </div>
+                    <a href="blog/critical-smb-vulnerabilities.html" class="read-more">Read Analysis →</a>
+                </article>
+                
+                <article class="blog-card">
+                    <div class="blog-meta">
+                        <span class="date">2025-05-20</span>
+                        <span class="category">Tutorial</span>
+                    </div>
+                    <h3><a href="blog/building-cyber-defense-lab.html">Building Your Home Cyber Defense Lab</a></h3>
+                    <p class="blog-excerpt">Step-by-step guide to creating a personal cybersecurity testing environment. Essential tools, configurations, and best practices for security enthusiasts and professionals.</p>
+                    <div class="blog-tags">
+                        <span class="tag">Homelab</span>
+                        <span class="tag">Tutorial</span>
+                        <span class="tag">Training</span>
+                    </div>
+                    <a href="blog/building-cyber-defense-lab.html" class="read-more">Read Analysis →</a>
+                </article>
+                
+                <article class="blog-card">
+                    <div class="blog-meta">
+                        <span class="date">2025-05-18</span>
+                        <span class="category">Threat Intelligence</span>
+                    </div>
+                    <h3><a href="#">Ransomware Evolution: New Tactics and Defense Strategies</a></h3>
+                    <p class="blog-excerpt">Analysis of latest ransomware campaigns and their sophisticated encryption methods. Modern defense strategies including backup encryption and endpoint detection.</p>
+                    <div class="blog-tags">
+                        <span class="tag">Ransomware</span>
+                        <span class="tag">Malware</span>
+                        <span class="tag">Defense</span>
+                    </div>
+                    <a href="#" class="read-more">Read Analysis →</a>
+                </article>
+                
+                <article class="blog-card">
+                    <div class="blog-meta">
+                        <span class="date">2025-05-15</span>
+                        <span class="category">Network Security</span>
+                    </div>
+                    <h3><a href="#">Zero Trust Architecture: Implementation Guide</a></h3>
+                    <p class="blog-excerpt">Comprehensive guide to implementing Zero Trust security model in modern enterprise environments. Practical steps and real-world case studies included.</p>
+                    <div class="blog-tags">
+                        <span class="tag">Zero Trust</span>
+                        <span class="tag">Network Security</span>
+                        <span class="tag">Enterprise</span>
+                    </div>
+                    <a href="#" class="read-more">Read Analysis →</a>
+                </article>
+                
+                <article class="blog-card">
+                    <div class="blog-meta">
+                        <span class="date">2025-05-12</span>
+                        <span class="category">Cloud Security</span>
+                    </div>
+                    <h3><a href="#">AWS Security Best Practices: A Complete Guide</a></h3>
+                    <p class="blog-excerpt">Essential security configurations for AWS environments. IAM policies, VPC security, and monitoring strategies to protect your cloud infrastructure.</p>
+                    <div class="blog-tags">
+                        <span class="tag">AWS</span>
+                        <span class="tag">Cloud Security</span>
+                        <span class="tag">Best Practices</span>
+                    </div>
+                    <a href="#" class="read-more">Read Analysis →</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog-subscribe">
+        <div class="container">
+            <div class="subscribe-box">
+                <h3>🔔 Subscribe to Intel Updates</h3>
+                <p>Stay informed about the latest cybersecurity threats and defense strategies. Get exclusive access to advanced threat intelligence and security research.</p>
+                <div class="subscribe-options">
+                    <a href="mailto:subscribe@hypergridsec.com?subject=Subscribe to Intel Feed" class="subscribe-btn">📧 Email Updates</a>
+                    <a href="contact.html" class="subscribe-btn">🔒 Secure Updates</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>HyperGrid Defenders Lab</h4>
+                    <p>Elite cybersecurity solutions protecting the digital frontier.</p>
+                    <div class="contact-info">
+                        <p>📧 contact@hypergridsec.com</p>
+                        <p>🔐 security@hypergridsec.com</p>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html">Vulnerability Assessment</a></li>
+                        <li><a href="services.html">Penetration Testing</a></li>
+                        <li><a href="services.html">Security Implementation</a></li>
+                        <li><a href="services.html">Threat Analysis</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="blog.html">Security Blog</a></li>
+                        <li><a href="security.txt">Security Policy</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Security Notice</h4>
+                    <div class="security-info">
+                        <p>🛡️ This site uses HTTPS encryption</p>
+                        <p>🔒 All communications are secured</p>
+                        <p>🎯 Zero-trust security model</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 HyperGrid Defenders Lab. All rights reserved.</p>
+                <p class="security-notice">"In the digital realm, security is not a destination—it's a continuous mission."</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/scripts.js"></script>
+</body>
+</html>
