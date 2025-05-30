@@ -7,7 +7,7 @@
     <meta name="description" content="Get in touch with HyperGrid Defenders Lab for cybersecurity consultations and secure communications.">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; img-src 'self' data:; connect-src 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; img-src 'self' data:; connect-src 'self' https://formspree.io;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
@@ -58,14 +58,14 @@
                     <div class="method-icon">📧</div>
                     <h3>Email Contact</h3>
                     <p>For general inquiries and initial consultations</p>
-                    <a href="mailto:secure.defenderslab@protonmail.com" class="contact-link">contact@hypergridsec.com</a>
+                    <a href="mailto:secure.defenderslab@protonmail.com" class="contact-link">secure.defenderslab@protonmail.com</a>
                     <div class="response-time">Response: 24-48 hours</div>
                 </div>
                 <div class="contact-method">
                     <div class="method-icon">🔐</div>
                     <h3>Secure Communications</h3>
                     <p>For sensitive security matters requiring encryption</p>
-                    <a href="mailto:secure.defenderslab@protonmail.com" class="contact-link">security@hypergridsec.com</a>
+                    <a href="mailto:secure.defenderslab@protonmail.com" class="contact-link">secure.defenderslab@protonmail.com</a>
                     <div class="pgp-info">PGP Key: 0xDEF455EC789ABD21</div>
                     <div class="response-time">Response: 4-12 hours</div>
                 </div>
@@ -89,7 +89,13 @@
                     <p>Use this encrypted form for initial consultations and project inquiries. All communications are secured and confidential.</p>
                 </div>
                 
-                <form class="contact-form" id="contact-form" method="POST" action="#" novalidate>
+                <form class="contact-form" id="contact-form" method="POST" action="https://formspree.io/f/meokjzrd">
+                    <!-- Formspree Configuration -->
+                    <input type="hidden" name="_subject" value="🛡️ New Contact Form Submission - HyperGrid Defenders Lab">
+                    <input type="hidden" name="_next" value="https://zerohack01.github.io/HyperGrid-Defenders-Lab/contact.html?success=1">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="basic">
+                    
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name">Identification:</label>
@@ -123,14 +129,14 @@
                             <label for="service">Service Interest:</label>
                             <select id="service" name="service" required>
                                 <option value="">Select a service...</option>
-                                <option value="vulnerability-assessment">Vulnerability Assessment</option>
-                                <option value="penetration-testing">Penetration Testing</option>
-                                <option value="security-implementation">Security Implementation</option>
-                                <option value="threat-analysis">Custom Threat Analysis</option>
-                                <option value="incident-response">Incident Response</option>
-                                <option value="security-training">Security Training</option>
-                                <option value="consultation">General Consultation</option>
-                                <option value="other">Other</option>
+                                <option value="vulnerability-assessment">🔍 Vulnerability Assessment ($2,500)</option>
+                                <option value="penetration-testing">🎯 Penetration Testing ($5,000)</option>
+                                <option value="security-implementation">🛠️ Security Implementation ($3,500)</option>
+                                <option value="threat-analysis">🔬 Custom Threat Analysis ($1,500)</option>
+                                <option value="incident-response">🚨 Incident Response ($4,000)</option>
+                                <option value="security-training">📚 Security Training ($800)</option>
+                                <option value="consultation">💬 General Consultation</option>
+                                <option value="other">🔧 Other Services</option>
                             </select>
                         </div>
                         
@@ -138,10 +144,10 @@
                             <label for="urgency">Priority Level:</label>
                             <select id="urgency" name="urgency" required>
                                 <option value="">Select priority...</option>
-                                <option value="low">Low - General inquiry</option>
-                                <option value="medium">Medium - Planning consultation</option>
-                                <option value="high">High - Active security concern</option>
-                                <option value="critical">Critical - Active incident</option>
+                                <option value="low">🟢 Low - General inquiry</option>
+                                <option value="medium">🟡 Medium - Planning consultation</option>
+                                <option value="high">🟠 High - Active security concern</option>
+                                <option value="critical">🔴 Critical - Active incident</option>
                             </select>
                         </div>
                     </div>
@@ -154,25 +160,35 @@
                     
                     <div class="form-group">
                         <label for="message">Encrypted Message:</label>
-                        <textarea id="message" name="message" rows="6" required placeholder="Detailed description of your requirements..."></textarea>
+                        <textarea id="message" name="message" rows="6" required placeholder="Detailed description of your cybersecurity requirements, current security posture, specific concerns, timeline, and any other relevant information..."></textarea>
                         <small>Detailed description of your requirements (minimum 20 characters)</small>
                     </div>
                     
                     <div class="form-group checkbox-group">
-                        <input type="checkbox" id="pgp-request" name="pgp-request">
+                        <input type="checkbox" id="pgp-request" name="pgp_encrypted_response" value="yes">
                         <label for="pgp-request" class="checkbox-label">
                             Request PGP encrypted response for sensitive communications
                         </label>
                     </div>
                     
                     <div class="form-group checkbox-group">
-                        <input type="checkbox" id="privacy-consent" name="privacy-consent" required>
+                        <input type="checkbox" id="newsletter" name="newsletter_signup" value="yes">
+                        <label for="newsletter" class="checkbox-label">
+                            Subscribe to HyperGrid security intelligence updates
+                        </label>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="privacy-consent" name="privacy_consent" value="yes" required>
                         <label for="privacy-consent" class="checkbox-label">
-                            I consent to secure processing of this information for consultation purposes
+                            I consent to secure processing of this information for consultation purposes and agree to the privacy policy
                         </label>
                     </div>
                     
                     <button type="submit" class="submit-btn">TRANSMIT SECURE MESSAGE</button>
+                    
+                    <!-- Status message for Formspree -->
+                    <div id="form-status" style="margin-top: 1rem; text-align: center; color: var(--secondary-green);"></div>
                 </form>
             </div>
         </div>
@@ -216,14 +232,14 @@
                 </div>
                 
                 <div class="security-item">
-                    <h3>🏢 Secure Facilities</h3>
-                    <p>Our operations are conducted from:</p>
+                    <h3>🏢 Data Protection</h3>
+                    <p>Your information is protected by:</p>
                     <ul>
-                        <li>TEMPEST-rated secure rooms</li>
-                        <li>Biometric access controls</li>
-                        <li>24/7 physical security</li>
-                        <li>Air-gapped networks</li>
-                        <li>Faraday cage protection</li>
+                        <li>GDPR compliant data handling</li>
+                        <li>Secure form submission via Formspree</li>
+                        <li>No data retention beyond consultation</li>
+                        <li>End-to-end encryption options</li>
+                        <li>Professional confidentiality standards</li>
                     </ul>
                 </div>
             </div>
@@ -238,7 +254,7 @@
                     <p>Elite cybersecurity solutions protecting the digital frontier.</p>
                     <div class="contact-info">
                         <p>📧 secure.defenderslab@protonmail.com</p>
-                        <p>🔐 secure.defenderslab@protonmail.com</p>
+                        <p>🔐 PGP: 0xDEF455EC789ABD21</p>
                         <p>📞 +1-555-SECURITY</p>
                     </div>
                 </div>
@@ -274,8 +290,9 @@
             
             <div class="pgp-info">
                 <h4>🔐 High-Security Communications</h4>
-                <p>For sensitive inquiries requiring enhanced security:</p>
-                <p><strong>PGP Key ID:</strong> 0xDEF455EC789ABD21</p>
+                <p>For sensitive inquiries requiring enhanced security, all form submissions are automatically sent to:</p>
+                <p><strong>📧 secure.defenderslab@protonmail.com</strong></p>
+                <p><strong>🔑 PGP Key ID:</strong> 0xDEF455EC789ABD21</p>
             </div>
             
             <div class="footer-bottom">
