@@ -1,0 +1,22 @@
+Contact: mailto:zerohack01@protonmail.com
+Contact: https://zerohack01.github.io/HyperGrid-Defenders-Lab/contact.html
+Expires: 2025-12-31T23:59:59.000Z
+Encryption: https://zerohack01.github.io/HyperGrid-Defenders-Lab/pgp-key.txt
+Preferred-Languages: en
+Policy: https://zerohack01.github.io/HyperGrid-Defenders-Lab/security-policy.html
+Canonical: https://zerohack01.github.io/HyperGrid-Defenders-Lab/.well-known/security.txt
+Hiring: https://zerohack01.github.io/HyperGrid-Defenders-Lab/careers.html
+Acknowledgments: https://zerohack01.github.io/HyperGrid-Defenders-Lab/security-researchers.html
+
+# Vulnerability Disclosure Policy
+# We welcome responsible disclosure of security vulnerabilities.
+# Please allow up to 90 days for investigation and remediation.
+# We commit to acknowledging all valid reports within 48 hours.
+
+# Scope
+# In-scope: All subdomains of zerohack01.github.io
+# Out-of-scope: Third-party integrations, social engineering
+
+# PGP Key Details
+# Key ID: 0xDEF455EC789ABD21
+# Fingerprint: A1B2 C3D4 E5F6 7890 1234 5678 DEF4 55EC 789A BD21
