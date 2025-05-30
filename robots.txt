@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /assets/js/src/
+Disallow: /temp/
+
+# Allow important files
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/images/
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://zerohack01.github.io/HyperGrid-Defenders-Lab/sitemap.xml
