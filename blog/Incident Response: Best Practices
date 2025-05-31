@@ -1,1 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incident Response: Best Practices</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #00ff00;
+            --dark-bg: #0a1a0a;
+            --dark-accent: #1c2b1c;
+            --neon-green: #00cc00;
+            --highlight-yellow: #ccff33;
+            --shadow-glow: 0 0 10px rgba(0, 255, 0, 0.5);
+            --reading-bg: #1a1a1a;
+            --reading-text: #e0e0e0;
+        }
 
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background: linear-gradient(180deg, var(--dark-bg), var(--dark-accent));
+            color: var(--primary-green);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-home {
+            background: var(--neon-green);
+            color: var(--dark-bg);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            text-decoration: none;
+            border: 2px solid var(--primary-green);
+            transition: all 0.3s;
+        }
+
+        .btn-home:hover {
+            background: var(--dark-bg);
+            color: var(--primary-green);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-home.error {
+            background: #ff3333;
+            border-color: #cc0000;
+            cursor: not-allowed;
+        }
+
+        .reading-mode-toggle {
+            background: var(--neon-green);
+            color: var(--dark-bg);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .reading-mode-toggle:hover {
+            background: var(--primary-green);
+            box-shadow: var(--shadow-glow);
+        }
+
+        h1 {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 2.8em;
+            color: var(--neon-green);
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: var(--shadow-glow);
+        }
+
+        h2 {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 2em;
+            color: var(--neon-green);
+            margin: 40px 0 20px;
+            border-left: 5px solid var(--primary-green);
+            padding-left: 15px;
+        }
+
+        h3 {
+            font-size: 1.6em;
+            color: var(--primary-green);
+            margin: 30px 0 15px;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin: 15px 0;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        li::before {
+            content: '>>';
+            color: var(--neon-green);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        code {
+            background: var(--dark-accent);
+            color: var(--highlight-yellow);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        pre {
+            background: var(--dark-bg);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 4px solid var(--neon-green);
+            box-shadow: var(--shadow-glow);
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .highlight-box {
+            background: rgba(0, 204, 0, 0.15);
+            border: 2px solid var(--neon-green);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            box-shadow: var(--shadow-glow);
+        }
+
+        a {
+            color: var(--highlight-yellow);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--primary-green);
+            text-shadow: 0 0 5px var(--primary-green);
+        }
+
+        .code-comment {
+            color: #669966;
+            font-style: italic;
+        }
+
+        .terminal {
+            background: var(--dark-bg);
+            border: 2px solid var(--neon-green);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-glow);
+            margin: 25px 0;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .terminal::before {
+            content: 'TERMINAL OUTPUT';
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: var(--dark-bg);
+            color: var(--neon-green);
+            padding: 0 10px;
+            font-size: 0.8em;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            background: var(--dark-bg);
+            color: var(--primary-green);
+            border-radius: 8px;
+            border-top: 2px solid var(--neon-green);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .more-articles {
+            margin-top: 40px;
+        }
+
+        .more-articles h3 {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .article-card {
+            background: var(--dark-accent);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: var(--shadow-glow);
+            transition: transform 0.3s;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-card a {
+            font-size: 1.2em;
+            color: var(--highlight-yellow);
+        }
+
+        .article-card p {
+            font-size: 1em;
+            color: var(--primary-green);
+        }
+
+        .btn-more {
+            display: inline-block;
+            background: var(--neon-green);
+            color: var(--dark-bg);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+            border: 2px solid var(--primary-green);
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .btn-more:hover {
+            background: var(--dark-bg);
+            color: var(--primary-green);
+            box-shadow: var(--shadow-glow);
+        }
+
+        body.reading-mode {
+            background: linear-gradient(180deg, var(--reading-bg), #2b2b2b);
+            color: var(--reading-text);
+        }
+
+        .reading-mode h1,
+        .reading-mode h2,
+        .reading-mode h3 {
+            color: var(--neon-green);
+        }
+
+        .reading-mode .highlight-box {
+            background: rgba(0, 204, 0, 0.1);
+        }
+
+        .reading-mode .terminal {
+            background: var(--reading-bg);
+        }
+
+        .reading-mode code {
+            background: #2b2b2b;
+        }
+
+        .reading-mode pre {
+            background: #2b2b2b;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2em; }
+            h2 { font-size: 1.6em; }
+            .container { padding: 20px; }
+            .navbar { top: 10px; left: 10px; flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="https://zerohack01.github.io/HyperGrid-Defenders-Lab/index.html" id="homeButton" class="btn-home">Back to Home</a>
+        <button class="reading-mode-toggle" onclick="toggleReadingMode()">Reading Mode</button>
+    </div>
+    <div class="container">
+        <h1>Incident Response: Best Practices</h1>
+        <p><strong>Published by HyperGrid Defenders Lab | May 30, 2025</strong></p>
+
+        <h2>Introduction to Incident Response</h2>
+        <p>Incident response (IR) is a structured process for identifying, investigating, containing, and mitigating cybersecurity incidents in enterprise networks. Effective IR minimizes damage, reduces recovery time, and prevents recurrence. With the rise of sophisticated threats like ransomware and advanced persistent threats (APTs), robust IR practices are critical. This guide, crafted by the HyperGrid Defenders Lab, provides a practical, step-by-step approach to incident detection and response, leveraging open-source tools and industry-standard frameworks like NIST 800-61.</p>
+        <p>The IR process consists of six phases: Preparation, Identification, Containment, Eradication, Recovery, and Lessons Learned. This blog offers actionable techniques, code snippets, and tools to implement each phase effectively.</p>
+
+        <h2>Phase 1: Preparation</h2>
+        <p>Preparation is the foundation of effective IR, ensuring teams are equipped to handle incidents.</p>
+        <p><strong>Key Actions:</strong></p>
+        <ul>
+            <li><strong>Build an IR Team:</strong> Assign roles (e.g., incident coordinator, forensic analyst, network admin).</li>
+            <li><strong>Develop an IR Plan:</strong> Document procedures, escalation paths, and communication protocols.</li>
+            <li><strong>Deploy Monitoring Tools:</strong> Use Security Onion, Splunk, or Zeek for real-time visibility.</li>
+            <li><strong>Conduct Training:</strong> Simulate incidents using tools like <a href="https://github.com/splunk/attack_range">Splunk Attack Range</a>.</li>
+        </ul>
+        <p><strong>Tool Setup: Security Onion</strong></p>
+        <pre>
+# Install Security Onion (Ubuntu)
+wget https://download.securityonion.net/file/securityonion/securityonion.iso
+# Boot ISO in VirtualBox, follow setup wizard
+sudo so-start
+# Access web interface
+https://<security_onion_ip>
+        </pre>
+        <div class="highlight-box">
+            <p><strong>Best Practice:</strong> Maintain an offline copy of your IR plan and contact list to ensure accessibility during network outages.</p>
+        </div>
+
+        <h2>Phase 2: Identification</h2>
+        <p>Identification involves detecting and validating incidents using logs, alerts, and anomaly detection.</p>
+        <p><strong>Key Actions:</strong></p>
+        <ul>
+            <li><strong>Monitor Logs:</strong> Analyze system, application, and network logs for suspicious activity.</li>
+            <li><strong>Use SIEM:</strong> Leverage Splunk or ELK Stack to correlate events.</li>
+            <li><strong>Network Analysis:</strong> Deploy Zeek for protocol-specific monitoring.</li>
+        </ul>
+        <p><strong>Example: Detecting SMB Exploit (EternalBlue)</strong></p>
+        <pre>
+# Zeek script for SMB monitoring
+event smb1_message(c: connection, hdr: SMB1::Header, is_orig: bool) {
+    if (hdr$status != 0) {
+        print fmt("SMB error: %s -> %s", c$id$orig_h, c$id$resp_h);
+    }
+}
+# Run Zeek
+zeek -i eth0 smb_analyzer.zeek
+        </pre>
+        <p><strong>SIEM Query (Splunk):</strong></p>
+        <pre>
+index=security sourcetype=zeek:smb status!=0 | table src_ip, dest_ip, status
+        </pre>
+        <div class="terminal">
+            <p><strong>Tip:</strong> Run <code>nmap --script smb-vuln-ms17-010 -p445 192.168.1.0/24</code> to identify systems vulnerable to SMB exploits.</p>
+        </div>
+
+        <h2>Phase 3: Containment</h2>
+        <p>Containment isolates affected systems to prevent further damage while preserving evidence.</p>
+        <p><strong>Key Actions:</strong></p>
+        <ul>
+            <li><strong>Short-Term Containment:</strong> Disconnect compromised systems from the network.</li>
+            <li><strong>Long-Term Containment:</strong> Apply firewall rules or VLAN segmentation.</li>
+            <li><strong>Preserve Evidence:</strong> Create forensic images of affected systems.</li>
+        </ul>
+        <p><strong>Example: Firewall Rule (pfSense)</strong></p>
+        <pre>
+# Block traffic from compromised IP
+# Web UI: Firewall > Rules > LAN > Add
+# Action: Block, Source: 192.168.1.100, Destination: Any
+        </pre>
+        <p><strong>Forensic Imaging (Linux):</strong></p>
+        <pre>
+# Create disk image
+sudo dd if=/dev/sda of=/mnt/evidence/image.dd bs=4M status=progress
+# Generate hash
+sha256sum /mnt/evidence/image.dd > /mnt/evidence/image.dd.sha256
+        </pre>
+
+        <h2>Phase 4: Eradication</h2>
+        <p>Eradication removes malicious artifacts and addresses root causes.</p>
+        <p><strong>Key Actions:</strong></p>
+        <ul>
+            <li><strong>Remove Malware:</strong> Use EDR tools like Microsoft Defender or ClamAV.</li>
+            <li><strong>Patch Vulnerabilities:</strong> Apply updates for exploited CVEs (e.g., CVE-2020-0796).</li>
+            <li><strong>Reset Credentials:</strong> Change passwords for compromised accounts.</li>
+        </ul>
+        <p><strong>Example: Malware Scan (ClamAV)</strong></p>
+        <pre>
+# Install and update ClamAV
+sudo apt install -y clamav
+sudo freshclam
+# Scan system
+clamscan -r / --bell -i
+        </pre>
+        <p><strong>Patch Verification:</strong></p>
+        <pre>
+# Check Windows patch status
+systeminfo | findstr KB
+        </pre>
+
+        <h2>Phase 5: Recovery</h2>
+        <p>Recovery restores systems to normal operation while monitoring for recurrence.</p>
+        <p><strong>Key Actions:</strong></p>
+        <ul>
+            <li><strong>Restore from Backups:</strong> Use verified, offline backups.</li>
+            <li><strong>Monitor Systems:</strong> Watch for signs of reinfection.</li>
+            <li><strong>Validate Operations:</strong> Test critical services post-recovery.</li>
+        </ul>
+        <p><strong>Example: Restore with Veeam</strong></p>
+        <pre>
+# Mount backup (Veeam Backup & Replication)
+# Web UI: Backups > Disk > Select backup > Restore > Entire VM
+        </pre>
+        <p><strong>Monitor Post-Recovery (Security Onion):</strong></p>
+        <pre>
+# Check for suspicious connections
+sudo so-elastic-search --query "index=security sourcetype=zeek:conn | table src_ip, dest_ip, dest_port"
+        </pre>
+
+        <h2>Phase 6: Lessons Learned</h2>
+        <p>Lessons Learned improves future IR by analyzing the incident and updating processes.</p>
+        <p><strong>Key Actions:</strong></p>
+        <ul>
+            <li><strong>Document Findings:</strong> Record timeline, root cause, and response actions.</li>
+            <li><strong>Update Policies:</strong> Revise IR plans based on gaps identified.</li>
+            <li><strong>Train Team:</strong> Conduct post-incident drills.</li>
+        </ul>
+        <p><strong>Example: Incident Report Template</strong></p>
+        <pre>
+# Incident Report
+Date: 2025-05-30
+Incident Type: Ransomware
+Detection Method: Security Onion alert
+Response Actions:
+- Isolated affected system (192.168.1.100)
+- Applied patches (KB4551762)
+Lessons Learned:
+- Enable SMB signing
+- Increase log retention
+        </pre>
+        <div class="highlight-box">
+            <p><strong>Best Practice:</strong> Conduct a post-incident review within 72 hours to capture fresh insights and improve response processes.</p>
+        </div>
+
+        <h2>Practical Incident Response Workflow</h2>
+        <p><strong>Scenario: Detecting and Responding to a Ransomware Attack</strong></p>
+        <ol>
+            <li><strong>Detection:</strong> Security Onion alerts on SMB exploit (CVE-2017-0144). Query logs:</li>
+            <pre>
+index=security sourcetype=suricata signature="ET EXPLOIT EternalBlue" | table src_ip, dest_ip
+            </pre>
+            <li><strong>Containment:</strong> Block the source IP (e.g., <code>192.168.1.100</code>) via pfSense.</li>
+            <li><strong>Investigation:</strong> Use Velociraptor for endpoint forensics:</li>
+            <pre>
+# Collect process data
+velociraptor --config client.config.yaml collect Process.List
+            </pre>
+            <li><strong>Eradication:</strong> Remove ransomware with ClamAV and patch systems.</li>
+            <li><strong>Recovery:</strong> Restore from backups and monitor for reinfection.</li>
+            <li><strong>Lessons Learned:</strong> Update firewall rules and train staff on phishing awareness.</li>
+        </ol>
+        <div class="terminal">
+            <p><strong>Tip:</strong> Use <code>velociraptor --config server.config.yaml hunt</code> to deploy enterprise-wide forensic hunts.</p>
+        </div>
+
+        <h2>HyperGrid Defenders Lab: Our Commitment</h2>
+        <p>HyperGrid Defenders Lab is dedicated to advancing cybersecurity through practical research and open-source tools. Our GitHub repository, <a href="https://github.com/ZeroHack01/HyperGrid-Defenders-Lab">HyperGrid-Defenders-Lab</a>, initialized by ZeroHack01, provides resources for effective incident response. We encourage contributions to strengthen our collective defenses.</p>
+
+        <h2>Conclusion</h2>
+        <p>Effective incident response is critical for mitigating cyber threats in enterprise networks. By following the NIST 800-61 framework and leveraging tools like Security Onion, Zeek, and Velociraptor, organizations can detect, contain, and recover from incidents efficiently. HyperGrid Defenders Lab remains committed to providing actionable insights and tools to enhance cybersecurity resilience.</p>
+
+        <div class="more-articles">
+            <h3>Explore More Resources</h3>
+            <div class="article-card">
+                <a href="https://zerohack01.github.io/HyperGrid-Defenders-Lab/blog/critical-smb-vulnerabilities.html">Critical SMB Vulnerabilities: A Technical Analysis</a>
+                <p>A comprehensive analysis of SMB vulnerabilities and mitigation strategies.</p>
+            </div>
+            <div class="article-card">
+                <a href="https://zerohack01.github.io/HyperGrid-Defenders-Lab/blog/advanced-persistent-threats.html">Advanced Persistent Threats: A Technical Analysis</a>
+                <p>An in-depth look at APT methodologies and defense strategies.</p>
+            </div>
+            <div class="article-card">
+                <a href="https://zerohack01.github.io/HyperGrid-Defenders-Lab/blog/building-cyber-defense-lab.html">Building a Cyber Defense Lab: A Practical Guide</a>
+                <p>A step-by-step guide to creating a cybersecurity training environment.</p>
+            </div>
+            <a href="https://zerohack01.github.io/HyperGrid-Defenders-Lab/blog.html" class="btn-more">Explore More Articles</a>
+        </div>
+
+        <footer>
+            <p>© 2025 HyperGrid Defenders Lab. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleReadingMode() {
+            document.body.classList.toggle('reading-mode');
+            const button = document.querySelector('.reading-mode-toggle');
+            button.textContent = document.body.classList.contains('reading-mode') ? 'Hacker Mode' : 'Reading Mode';
+        }
+
+        document.getElementById('homeButton').addEventListener('click', function(event) {
+            try {
+                window.location.href = this.href;
+            } catch (error) {
+                this.classList.add('error');
+                this.textContent = 'Navigation Failed';
+                this.title = 'Unable to load home page. Please try again later.';
+                console.error('Navigation error:', error);
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
