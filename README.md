@@ -51,25 +51,6 @@
 
 ---
 
-## 🛠️ Tech Stack
-
-```yaml
-Website:
-  - Frontend: HTML5, CSS3, JavaScript
-  - Framework: [Your framework]
-  - Hosting: [Your hosting]
-  
-Blog Platform:
-  - CMS: [Your CMS]
-  - Topics: Cybersecurity, Future Tech, Prompt Engineering
-  
-Security Tools:
-  - Assessment: Industry-standard tools
-  - Testing: Professional pentesting suite
-```
-
----
-
 ## 📋 Repository Contents
 
 This repository contains:
