@@ -1,140 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Critical SMB Vulnerabilities | HyperGrid Defenders Lab</title>
-  <style>
-    body {
-      background-color: #0f0f1a;
-      color: #00ffcc;
-      font-family: 'Courier New', Courier, monospace;
-      padding: 2rem;
-      line-height: 1.8;
-    }
-    h1, h2, h3 {
-      color: #ff00cc;
-      text-shadow: 0 0 5px #ff00cc;
-    }
-    a {
-      color: #00ffff;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-      color: #00ff99;
-    }
-    .code-box {
-      background: #1c1c2e;
-      padding: 1rem;
-      border-left: 4px solid #00ffcc;
-      margin: 1rem 0;
-      color: #ffffff;
-      font-size: 0.95rem;
-      overflow-x: auto;
-    }
-    .highlight {
-      color: #ffff00;
-      font-weight: bold;
-    }
-    .footer {
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: #888;
-    }
-    ul {
-      margin-left: 2rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Critical SMB Vulnerabilities: A Deep Dive into Network Exploits</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(180deg, #0a1a0a, #1c2b1c);
+            color: #00ff00;
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        h1 {
+            font-size: 2.8em;
+            color: #00cc00;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+            border-bottom: 2px solid #006600;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.9em;
+            color: #00cc00;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            border-left: 4px solid #00ff00;
+            padding-left: 12px;
+        }
+        h3 {
+            font-size: 1.5em;
+            color: #00ff00;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.1em;
+            margin: 15px 0;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 30px;
+        }
+        li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        li::before {
+            content: '>>';
+            color: #00cc00;
+            position: absolute;
+            left: -20px;
+        }
+        code {
+            background: #1c2b1c;
+            color: #ccff33;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #1c2b1c;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid #00cc00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            margin: 20px 0;
+        }
+        .highlight-box {
+            background: rgba(0, 204, 0, 0.1);
+            border: 1px solid #00cc00;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+        a {
+            color: #ccff33;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        .btn-home {
+            display: inline-block;
+            background: #006600;
+            color: #00ff00;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 20px 0;
+            border: 1px solid #00cc00;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .btn-home:hover {
+            background: #00cc00;
+            box-shadow: 0 0 10px #00ff00;
+        }
+        .code-comment {
+            color: #669966;
+            font-style: italic;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: #0a1a0a;
+            color: #00ff00;
+            border-radius: 5px;
+            border-top: 1px solid #00cc00;
+        }
+        .terminal {
+            background: #0a1a0a;
+            border: 1px solid #00cc00;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            margin: 20px 0;
+        }
+    </style>
 </head>
 <body>
-  <h1>Critical SMB Vulnerabilities: The Threats Lurking in Plain Sight</h1>
-  <p><strong>Author:</strong> ZeroHack01 | <strong>Date:</strong> 2025-05-31</p>
-  <p>Welcome to <span class="highlight">HyperGrid Defenders Lab</span> — a sanctuary for cyber defenders and red team strategists. This blog post focuses on one of the most exploited protocols in modern network infrastructures: the <strong>Server Message Block</strong>, or SMB. Often overlooked by defenders and abused by attackers, SMB vulnerabilities remain at the heart of many catastrophic breaches. Buckle up — we’re diving deep into SMB’s anatomy, historical exploits, weaponization techniques, and advanced defense strategies.</p>
+    <div class="container">
+        <a href="/index.html" class="btn-home">Back to Home</a>
+        <h1>Critical SMB Vulnerabilities: A Deep Dive into Network Exploits</h1>
+        <p><strong>Published by HyperGrid Defenders Lab | May 30, 2025, 03:26 PM +06</strong></p>
 
-  <h2>📡 What is SMB? A Double-Edged Sword</h2>
-  <p>The <strong>Server Message Block (SMB)</strong> protocol was originally designed by IBM in the 1980s and later modified by Microsoft to allow computers within the same network to share files, printers, and serial ports. Over time, it evolved through various versions: SMBv1 (insecure and deprecated), SMBv2 (introduced performance improvements), and SMBv3 (added encryption and modern security features).</p>
+        <h2>Introduction to Server Message Block (SMB)</h2>
+        <p>Server Message Block (SMB) is a cornerstone protocol for network resource sharing, enabling file access, printer services, and interprocess communication across Windows-based systems. Operating over TCP/UDP ports 137, 139 (NetBIOS), and 445 (direct SMB), SMB is integral to enterprise environments, facilitating seamless collaboration. Its evolution from SMBv1 to SMBv3 has introduced performance optimizations and security enhancements, yet vulnerabilities in its implementations remain a critical concern for cybersecurity professionals.</p>
+        <p>SMB’s client-server architecture allows clients to request resources from servers, which respond with access to shared files, directories, or devices. Its widespread use in corporate networks, small-to-medium businesses (SMBs), and even home environments makes it a high-value target for attackers. This article provides an in-depth technical analysis of critical SMB vulnerabilities, their exploitation mechanisms, real-world impacts, and comprehensive mitigation strategies to secure your network.</p>
 
-  <p>Unfortunately, legacy systems still running SMBv1 are everywhere — from hospitals and power plants to old office equipment and custom industrial software. And that’s precisely what makes SMB a juicy target: ubiquity combined with outdated implementations.</p>
+        <h2>Critical SMB Vulnerabilities: A Technical Breakdown</h2>
+        <p>The history of SMB is punctuated by vulnerabilities that have enabled devastating cyberattacks. Below, we dissect the most significant vulnerabilities, their technical underpinnings, and their exploitation pathways.</p>
 
-  <h2>⚠️ Why SMB is Dangerous in the Wrong Hands</h2>
-  <ul>
-    <li>Runs over port <strong>445/TCP</strong>, which is usually open in internal networks</li>
-    <li>Can be accessed without authentication in misconfigured setups</li>
-    <li>Often used for lateral movement by malware and APTs</li>
-    <li>Supports remote code execution if improperly patched</li>
-    <li>Capable of leaking sensitive credentials and hashes</li>
-  </ul>
+        <h3>EternalBlue (CVE-2017-0144)</h3>
+        <p><strong>Overview:</strong> EternalBlue, disclosed in 2017 by the Shadow Brokers, is a critical remote code execution (RCE) vulnerability in SMBv1. Allegedly developed by the NSA, it was weaponized in the WannaCry and NotPetya ransomware campaigns, highlighting its destructive potential.</p>
+        <p><strong>Technical Details:</strong> The vulnerability stems from a buffer overflow in the <code>SrvOs2FeaListSizeToNt</code> function, which mishandles File Extended Attributes (FEA) in <code>Trans2</code> requests. By sending a crafted packet, attackers trigger memory corruption, allowing arbitrary code execution. The exploit’s wormable nature enables it to propagate across networks without user interaction.</p>
+        <p><strong>Exploitation:</strong> Tools like Metasploit provide modules (e.g., <code>exploit/windows/smb/ms17_010_eternalblue</code>) that automate exploitation. The attack sequence involves:</p>
+        <ul>
+            <li>Sending a malicious <code>Trans2</code> packet to overflow the buffer.</li>
+            <li>Injecting shellcode to execute arbitrary commands.</li>
+            <li>Leveraging the DoublePulsar backdoor (often paired with EternalBlue) for persistent access.</li>
+        </ul>
+        <p><strong>Impact:</strong> WannaCry infected over 200,000 systems across 150 countries, disrupting healthcare, logistics, and government operations. Estimated damages reached $4 billion, underscoring the need for timely patching.</p>
 
-  <h2>💣 Notorious Exploits in SMB History</h2>
-  <p>Here are some infamous vulnerabilities that leveraged flaws in SMB:</p>
-  <div class="code-box">
-    EternalBlue (MS17-010) - Weaponized by WannaCry/NotPetya; enables RCE on SMBv1.
-    SMBGhost (CVE-2020-0796) - A buffer overflow bug in SMBv3 used for wormable attacks.
-    SMBleed (CVE-2020-1206) - Exploits memory disclosure in SMB, allowing info leaks.
-    CVE-2017-0144 - Related to EternalBlue, used for mass compromise across industries.
-  </div>
+        <h3>SMBGhost (CVE-2020-0796)</h3>
+        <p><strong>Overview:</strong> Discovered in March 2020, SMBGhost is a wormable RCE vulnerability in SMBv3.1.1, affecting Windows 10 and Server editions. Its ease of exploitation and lack of user interaction make it a significant threat.</p>
+        <p><strong>Technical Details:</strong> The flaw lies in the <code>Srv2DecompressData</code> function, where a crafted <code>Compression Transform Header</code> triggers an integer overflow. This allows attackers to overwrite memory and execute arbitrary code. The vulnerability is exploitable via a single malicious packet sent to port 445.</p>
+        <p><strong>Exploitation:</strong> Proof-of-concept exploits are available on platforms like <a href="https://vulners.com/exploitdb/EDB-ID:48537">Exploit-DB</a>. The attack involves:</p>
+        <ul>
+            <li>Crafting a compressed SMB packet with a manipulated header.</li>
+            <li>Triggering the overflow to gain kernel-level access.</li>
+            <li>Combining with SMBleed (CVE-2020-1206) to leak sensitive data, enhancing exploit reliability.</li>
+        </ul>
+        <p><strong>Impact:</strong> Unpatched systems risk complete compromise, enabling ransomware deployment, data theft, or persistent network access.</p>
 
-  <h2>🧠 Exploitation Process: From Discovery to Compromise</h2>
-  <p>Exploiting SMB involves several tactical steps:</p>
-  <ol>
-    <li>Scan the network using tools like <code>nmap</code> to identify hosts with port 445 open.</li>
-    <li>Use scripts like <code>smb-vuln*</code> to check for known flaws.</li>
-    <li>Deploy an exploit module (e.g., <code>ms17_010_eternalblue</code>) via Metasploit or custom payload.</li>
-    <li>Gain remote code execution (RCE) or shell access.</li>
-    <li>Spread laterally through pass-the-hash or token impersonation attacks.</li>
-  </ol>
+        <h3>ZeroLogon (CVE-2020-1472)</h3>
+        <p><strong>Overview:</strong> Disclosed in August 2020, ZeroLogon is a privilege escalation vulnerability in the Netlogon protocol, often used in conjunction with SMB authentication. It allows attackers to reset a domain controller’s password, granting administrative access.</p>
+        <p><strong>Technical Details:</strong> The vulnerability exploits a flaw in the <code>NetrServerReqChallenge</code> function, where a cryptographic weakness allows attackers to spoof credentials and set an empty password. This compromises the domain controller, exposing all SMB-accessible resources.</p>
+        <p><strong>Exploitation:</strong> Tools like <code>zerologon_tester.py</code> (available on GitHub) exploit this in seconds. The attack involves:</p>
+        <ul>
+            <li>Sending a Netlogon authentication request with a zeroed-out challenge.</li>
+            <li>Resetting the domain controller’s password to an empty value.</li>
+            <li>Authenticating via SMB to gain domain admin privileges.</li>
+        </ul>
+        <p><strong>Impact:</strong> Compromised domain controllers expose entire networks, enabling data breaches, ransomware, and persistent threats.</p>
 
-  <h2>🚨 Case Studies: The Cost of Ignorance</h2>
-  <h3>🔹 WannaCry (2017)</h3>
-  <p>WannaCry spread globally within hours, encrypting systems and demanding ransom in Bitcoin. It used EternalBlue to infect vulnerable SMBv1-enabled hosts, costing organizations an estimated $4 billion worldwide.</p>
-  <h3>🔹 NotPetya (2017)</h3>
-  <p>Unlike WannaCry, NotPetya had no decryption key — it was a wiper disguised as ransomware. Also using EternalBlue, it shut down shipping, manufacturing, and oil companies — including Maersk and Merck.</p>
+        <h3>SMBleed (CVE-2020-1206)</h3>
+        <p><strong>Overview:</strong> A companion to SMBGhost, SMBleed allows attackers to read uninitialized kernel memory, potentially leaking credentials, encryption keys, or other sensitive data.</p>
+        <p><strong>Technical Details:</strong> The vulnerability occurs in the same <code>Srv2DecompressData</code> function, where improper memory handling exposes kernel data. When paired with SMBGhost, it creates a potent attack chain for RCE and data exfiltration.</p>
+        <p><strong>Exploitation:</strong> Attackers craft packets to trigger memory leaks, analyzing the output to extract valuable information. This enhances other exploits by providing context, such as memory layout for reliable RCE.</p>
+        <p><strong>Impact:</strong> Data leakage amplifies the severity of breaches, enabling targeted attacks on high-value assets.</p>
+        <div class="highlight-box">
+            <p><strong>Security Alert:</strong> The wormable nature of SMBGhost and EternalBlue allows rapid network propagation. A single unpatched system can compromise an entire organization within minutes, emphasizing the urgency of mitigation.</p>
+        </div>
 
-  <h2>🔍 Red Team Tools and Payload Examples</h2>
-  <p>If you're a red teamer or penetration tester, here are essential tools to understand SMB attack surface:</p>
-  <div class="code-box">
-    # Detect SMB vulnerabilities
-    nmap -p445 --script=smb-vuln* 10.10.10.0/24
+        <h2>Real-World Consequences of SMB Exploits</h2>
+        <p>SMB vulnerabilities have fueled some of the most significant cyberattacks, with cascading effects across industries:</p>
+        <ul>
+            <li><strong>Data Breaches:</strong> SMB shares often contain sensitive data, such as financial records, intellectual property, or personally identifiable information (PII). Exploits like SMBleed can leak this data, leading to regulatory fines under GDPR, CCPA, or HIPAA.</li>
+            <li><strong>Ransomware Epidemics:</strong> EternalBlue powered WannaCry and NotPetya, locking critical systems and demanding cryptocurrency ransoms. The UK’s NHS faced operational disruptions, delaying patient care and costing millions.</li>
+            <li><strong>Lateral Movement and Persistence:</strong> Attackers use SMB vulnerabilities to move laterally, escalating privileges and planting backdoors. ZeroLogon enabled attackers to control domain controllers, granting access to all network resources.</li>
+            <li><strong>Operational Downtime:</strong> Exploits can crash SMB servers, causing denial-of-service (DoS) conditions. This disrupts business continuity, particularly for organizations reliant on shared resources.</li>
+            <li><strong>Financial Impact:</strong> WannaCry’s damages reached $4 billion, while NotPetya cost companies like Maersk and Merck over $1 billion each in recovery efforts. Small businesses, with limited resources, often face closure after such incidents.</li>
+        </ul>
+        <p>Small and medium-sized businesses (SMBs) are particularly vulnerable, as they often lack dedicated security teams or advanced monitoring tools, making them prime targets for automated exploit kits.</p>
 
-    # Enumerate SMB shares
-    smbclient -L //target_ip/ -U anonymous
+        <h2>Comprehensive Mitigation Strategies</h2>
+        <p>Securing SMB deployments requires a defense-in-depth approach, combining technical controls, proactive monitoring, and organizational policies. Below are detailed, actionable strategies for cybersecurity professionals:</p>
 
-    # CrackMapExec to test credentials
-    crackmapexec smb 10.10.10.100 -u user -p password
+        <h3>Disable SMBv1</h3>
+        <p>SMBv1 is an outdated, insecure protocol prone to exploitation. Microsoft recommends disabling it on all systems. Execute the following PowerShell commands:</p>
+        <pre>
+# Disable SMBv1 Server
+Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB1 -Type DWORD -Value 0 -Force
+# Disable SMBv1 Client
+Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" SMB1 -Type DWORD -Value 0 -Force
+# Disable SMBv1 Feature
+Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol
+        </pre>
+        <p>Verify with: <code>Get-SmbServerConfiguration | Select EnableSMB1Protocol</code>. Ensure no legacy systems require SMBv1 before disabling.</p>
 
-    # Exploit with Metasploit
-    use exploit/windows/smb/ms17_010_eternalblue
-  </div>
+        <h3>Prompt Patching</h3>
+        <p>Microsoft releases regular security updates for SMB vulnerabilities. Automate patching with tools like Windows Server Update Services (WSUS) or Microsoft Endpoint Configuration Manager (SCCM). For SMBGhost, apply the March 2020 update (KB4551762).</p>
+        <p><strong>Audit Tool:</strong> Use Nessus or OpenVAS to scan for missing patches. Validate with: <code>systeminfo | findstr KB</code>.</p>
 
-  <h2>🛡️ Defensive Hardening: Think Proactive</h2>
-  <p>Cybersecurity isn’t about being bulletproof — it’s about reducing your attack surface:</p>
-  <ul>
-    <li><strong>Disable SMBv1</strong>: Use PowerShell — <code>Set-SmbServerConfiguration -EnableSMB1Protocol $false</code></li>
-    <li><strong>Restrict SMB to trusted zones</strong>: Internal segmentation is critical.</li>
-    <li><strong>Implement SMB Signing</strong>: Helps prevent man-in-the-middle attacks.</li>
-    <li><strong>Use Network Firewalls</strong>: Block SMB on the perimeter by default.</li>
-    <li><strong>Monitor SMB traffic</strong>: Use IDS/IPS like Suricata or Zeek with SMB signatures.</li>
-    <li><strong>Patch Management</strong>: Automate CVE tracking and enforce patch policies.</li>
-  </ul>
+        <h3>Restrict SMB Ports</h3>
+        <p>Block SMB ports (137, 139, 445) at the network perimeter to prevent external access. Configure firewalls using iptables (Linux) or Windows Defender Firewall:</p>
+        <pre>
+# Linux iptables to block SMB ports
+iptables -A INPUT -p tcp --dport 445 -j DROP
+iptables -A INPUT -p udp --dport 137:139 -j DROP
+iptables -A OUTPUT -p tcp --dport 445 -j DROP
+iptables -A OUTPUT -p udp --dport 137:139 -j DROP
+        </pre>
+        <p>For Windows:</p>
+        <pre>
+New-NetFirewallRule -DisplayName "Block SMB Outbound" -Direction Outbound -Protocol TCP -LocalPort 445 -Action Block
+New-NetFirewallRule -DisplayName "Block SMB Inbound" -Direction Inbound -Protocol TCP -LocalPort 445 -Action Block
+        </pre>
+        <p>Verify open ports with: <code>netstat -ano | findstr :445</code>.</p>
 
-  <h2>📊 The Bigger Picture: Why SMB Still Matters</h2>
-  <p>Despite the risks, SMB continues to power business-critical functions — from backup systems to file replication to printer sharing. Security teams must balance functionality with risk. Modernizing SMB infrastructure doesn’t always mean abandoning it; it means configuring it securely and monitoring it diligently.</p>
+        <h3>Enable SMB Signing</h3>
+        <p>SMB signing ensures data integrity and authentication, mitigating man-in-the-middle (MITM) attacks. Configure via Group Policy:</p>
+        <p><code>Computer Configuration > Policies > Windows Settings > Security Settings > Local Policies > Security Options > Microsoft network server: Digitally sign communications (always)</code></p>
+        <p>Verify with: <code>Get-SmbServerConfiguration | Select RequireSecuritySignature</code>. Note that enabling signing may impact performance on older systems.</p>
 
-  <h2>🧬 Future Trends in SMB Security</h2>
-  <ul>
-    <li>Increased adoption of SMB over QUIC (encrypted, firewall-friendly protocol)</li>
-    <li>Integration of Zero Trust principles into file-sharing environments</li>
-    <li>Machine learning used for anomaly detection in SMB traffic</li>
-    <li>Cloud-based SMB proxies with inspection and policy enforcement</li>
-  </ul>
+        <h3>Network Segmentation</h3>
+        <p>Isolate SMB traffic using VLANs or software-defined networking (SDN). Tools like Cisco ACI or VMware NSX enforce granular segmentation policies, limiting lateral movement. Example VLAN configuration:</p>
+        <pre>
+# Cisco switch configuration
+vlan 100
+ name SMB_Segment
+interface GigabitEthernet0/1
+ switchport mode access
+ switchport access vlan 100
+        </pre>
 
-  <h2>🎯 Conclusion: Defend Your Grid</h2>
-  <p>The takeaway? SMB is like a superhighway inside your network — fast, functional, but dangerous when mismanaged. Learn to map it, monitor it, and secure it. Use threat intelligence to anticipate attacks. Simulate breaches regularly. And above all, never underestimate the power of a forgotten port 445.</p>
-  <p class="highlight">This is HyperGrid Defenders Lab — where you don’t just patch, you strategize.</p>
+        <h3>Advanced Monitoring</h3>
+        <p>Deploy intrusion detection systems (IDS) like Zeek or Security Onion to monitor SMB traffic. A Zeek script to log SMB activity:</p>
+        <pre>
+# Log SMB1 and SMB2/3 activity
+event smb1_message(c: connection, hdr: SMB1::Header, is_orig: bool) {
+    print fmt("SMB1 activity detected: %s -> %s", c$id$orig_h, c$id$resp_h);
+}
+event smb2_message(c: connection, hdr: SMB2::Header, is_orig: bool) {
+    print fmt("SMB2/3 activity detected: %s -> %s", c$id$orig_h, c$id$resp_h);
+}
+        </pre>
+        <p>Explore Zeek’s capabilities at <a href="https://github.com/zeek/zeek">Zeek’s GitHub</a>. Configure alerts for anomalies, such as unexpected SMBv1 traffic.</p>
 
-  <div class="footer">
-    Latest commit: Initial commit — Created base project structure by <a href="https://github.com/ZeroHack01">ZeroHack01</a>
-  </div>
+        <h3>Restrict Share Permissions</h3>
+        <p>Limit SMB share access to authorized users with minimal permissions. Audit and configure permissions using <code>icacls</code>:</p>
+        <pre>
+icacls "C:\SharedFolder" /inheritance:d
+icacls "C:\SharedFolder" /grant:r "Authenticated Users:(RX)"
+        </pre>
+        <p>Use Microsoft’s AccessChk to audit share permissions regularly.</p>
+
+        <h3>Endpoint Detection and Response (EDR)</h3>
+        <p>Deploy EDR solutions like CrowdStrike Falcon or Microsoft Defender for Endpoint to detect exploit attempts. Configure alerts for behaviors like unexpected <code>svchost.exe</code> activity on port 445 or abnormal file access patterns.</p>
+        <div class="terminal">
+            <p><strong>Terminal Tip:</strong> Run <code>netstat -ano | findstr :445</code> to identify open SMB ports. If listeners are detected on public interfaces, immediately tighten firewall rules.</p>
+        </div>
+
+        <h3>Penetration Testing</h3>
+        <p>Simulate attacks using tools like Metasploit or custom scripts to identify vulnerable SMB configurations. Test for EternalBlue and SMBGhost exposure with <code>nmap</code>:</p>
+        <pre>
+nmap --script smb-vuln-ms17-010 -p445 192.168.1.0/24
+nmap --script smb-vuln-cve-2020-0796 -p445 192.168.1.0/24
+        </pre>
+        <p>Conduct regular red team exercises to validate defenses.</p>
+
+        <h3>Backup and Recovery</h3>
+        <p>Maintain offline backups to mitigate ransomware risks. Use tools like Veeam or Windows Server Backup to schedule regular backups. Test restoration processes to ensure data integrity.</p>
+        <div class="highlight-box">
+            <p><strong>Pro Tip:</strong> Combine patching, segmentation, and monitoring to create a robust defense-in-depth strategy. Regular penetration testing and backup validation are critical for resilience against SMB exploits.</p>
+        </div>
+
+        <h2>HyperGrid Defenders Lab: Our Mission</h2>
+        <p>HyperGrid Defenders Lab is a cybersecurity research initiative focused on analyzing vulnerabilities, developing defensive tools, and sharing knowledge with the global security community. Our GitHub repository, <a href="https://github.com/ZeroHack01/HyperGrid-Defenders-Lab">HyperGrid-Defenders-Lab</a>, serves as a central hub for scripts, tools, and documentation. The initial commit by ZeroHack01 establishes the foundation for our ongoing research into network security threats.</p>
+        <p>We encourage collaboration from security researchers, developers, and practitioners. Contribute to our repository by submitting proof-of-concept exploits, detection scripts, or mitigation strategies. Together, we can strengthen the cybersecurity ecosystem.</p>
+
+        <h2>Conclusion</h2>
+        <p>SMB vulnerabilities, from EternalBlue’s global devastation to SMBGhost’s silent threat, underscore the critical need for proactive network security. These flaws enable data breaches, ransomware, and network compromise, with impacts ranging from financial losses to operational shutdowns. By implementing a multi-layered security strategy—disabling SMBv1, patching promptly, restricting ports, and monitoring traffic—organizations can significantly reduce their attack surface.</p>
+        <p>HyperGrid Defenders Lab is committed to empowering organizations with the tools and knowledge to secure their networks. Visit our <a href="https://github.com/ZeroHack01/HyperGrid-Defenders-Lab">GitHub repository</a> for the latest resources, and stay vigilant in the ever-evolving cybersecurity landscape.</p>
+
+        <footer>
+            <p>© 2025 HyperGrid Defenders Lab. All rights reserved.</p>
+            <p><a href="/index.html" class="btn-home">Back to Home</a></p>
+        </footer>
+    </div>
 </body>
 </html>
