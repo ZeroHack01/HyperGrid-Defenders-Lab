@@ -135,7 +135,7 @@
             text-shadow: 0 0 5px var(--primary-green);
         }
 
-        .btn-home {
+        .btn-more {
             display: inline-block;
             background: var(--neon-green);
             color: var(--dark-bg);
@@ -149,7 +149,7 @@
             transition: all 0.3s;
         }
 
-        .btn-home:hover {
+        .btn-more:hover {
             background: var(--dark-bg);
             color: var(--primary-green);
             box-shadow: var(--shadow-glow);
@@ -226,12 +226,12 @@
             color: #00cc00;
         }
 
-        .reading-mode .btn-home {
+        .reading-mode .btn-more {
             background: #00cc00;
             color: #1a1a1a;
         }
 
-        .reading-mode .btn-home:hover {
+        .reading-mode .btn-more:hover {
             background: #1a1a1a;
             color: #00cc00;
         }
@@ -242,6 +242,39 @@
 
         .reading-mode .terminal {
             background: #1a1a1a;
+        }
+
+        .more-articles {
+            margin-top: 40px;
+        }
+
+        .more-articles h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .article-card {
+            background: var(--dark-accent);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: var(--shadow-glow);
+            transition: transform 0.3s;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-card a {
+            font-size: 1.2em;
+            color: var(--highlight-yellow);
+        }
+
+        .article-card p {
+            font-size: 1em;
+            color: var(--primary-green);
         }
 
         @keyframes flicker {
@@ -267,9 +300,8 @@
 <body>
     <button class="reading-mode-toggle" onclick="toggleReadingMode()">Toggle Reading Mode</button>
     <div class="container">
-        <a href="/index.html" class="btn-home">Back to Home</a>
         <h1>Critical SMB Vulnerabilities: Hacking the Network Matrix</h1>
-        <p><strong>Published by HyperGrid Defenders Lab | May 31, 2025, 03:29 PM +06</strong></p>
+        <p><strong>Published by HyperGrid Defenders Lab | May 31, 2025, 03:34 PM +06</strong></p>
 
         <h2>Jack into the Grid: Understanding SMB</h2>
         <p>In the pulsing heart of the network matrix, Server Message Block (SMB) is the protocol that keeps data flowing like neon streams through a cybercity. Designed for file sharing, printer access, and interprocess communication, SMB is the backbone of Windows-based ecosystems. Operating on ports 137, 139 (NetBIOS), and 445 (direct SMB over TCP/IP), it’s the digital conduit for enterprise collaboration. But every system has its dark alleys, and SMB’s vulnerabilities are a hacker’s playground, ready to be exploited in the shadows of the grid.</p>
@@ -430,9 +462,25 @@ icacls "C:\SharedFolder" /grant:r "Authenticated Users:(RX)"
         <h2>Final Transmission</h2>
         <p>SMB vulnerabilities are the cracks in the network matrix, from EternalBlue’s global chaos to SMBGhost’s silent strikes. They enable data heists, ransomware, and full network takeovers. But with patched systems, sealed ports, and vigilant monitoring, you can lock down the grid. HyperGrid Defenders Lab is your ally in this fight—plug into our <a href="https://github.com/ZeroHack01/HyperGrid-Defenders-Lab">repo</a> and stay wired.</p>
 
+        <div class="more-articles">
+            <h3>More Articles</h3>
+            <div class="article-card">
+                <a href="/blog/securing-active-directory.html">Securing Active Directory: Defending the Core</a>
+                <p>Explore advanced techniques to lock down Active Directory against attacks like ZeroLogon.</p>
+            </div>
+            <div class="article-card">
+                <a href="/blog/ransomware-defense.html">Ransomware Defense: Strategies for the Digital Age</a>
+                <p>Learn how to protect your network from ransomware threats like WannaCry and NotPetya.</p>
+            </div>
+            <div class="article-card">
+                <a href="/blog/network-monitoring-tools.html">Network Monitoring: Tools to Watch the Shadows</a>
+                <p>Discover tools like Zeek and Security Onion for real-time threat detection.</p>
+            </div>
+            <a href="/blog" class="btn-more">Explore More Articles</a>
+        </div>
+
         <footer>
             <p>© 2025 HyperGrid Defenders Lab. All rights reserved.</p>
-            <p><a href="/index.html" class="btn-home">Back to Home</a></p>
         </footer>
     </div>
 
