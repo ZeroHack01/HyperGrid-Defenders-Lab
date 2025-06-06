@@ -1,4 +1,4 @@
-# 🛡️ HyperGrid Defenders Lab
+# 🛡️ HyperGrid Defenders Lab 
 
 <div align="center">
 ![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=900&size=25&pause=1000&color=00FF00&background=000000&center=true&vCenter=true&random=false&width=800&lines=Cybersecurity+Consulting;Vulnerability+Assessment;Penetration+Testing;Tech+Blog+Platform)
